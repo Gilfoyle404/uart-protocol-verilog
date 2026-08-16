@@ -46,13 +46,6 @@ Both `uartx` and `uartrx` (and `uart_top`, which passes them through) take the s
 
 Data width (8 bits) and stop bits (1) are fixed, not parameterized.
 
-## Getting Started
-
-### Prerequisites
-
-- A SystemVerilog-capable simulator (e.g., Icarus Verilog with `-g2012`, ModelSim, Vivado Simulator) — the FSMs use SystemVerilog `enum` state declarations
-- (Optional) GTKWave for viewing waveforms
-
 ### Simulation (Icarus Verilog example)
 
 ```bash
@@ -66,6 +59,3 @@ vvp uart_sim
 
 Transmitter, receiver, and top-level wiring are implemented and verified end-to-end via `tb_uart_top.v` (10/10 random bytes round-tripped correctly through `uart_top`).
 
-## License
-
-TBD
