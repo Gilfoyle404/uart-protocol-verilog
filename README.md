@@ -28,9 +28,10 @@ UART is an asynchronous serial communication protocol used for point-to-point da
 
 ```
 uart-protocol-verilog/
-├── transmitter.v   # uartx  — parallel-to-serial transmitter
-├── receiver.v      # uartrx — serial-to-parallel receiver
-├── uart_top.v      # wires a uartx's tx into a uartrx's rx
+├── transmitter.v    # uartx  — parallel-to-serial transmitter
+├── receiver.v       # uartrx — serial-to-parallel receiver
+├── uart_top.v       # wires a uartx's tx into a uartrx's rx
+├── tb_uart_top.v    # self-checking testbench for uart_top
 └── README.md
 ```
 
@@ -55,15 +56,15 @@ Data width (8 bits) and stop bits (1) are fixed, not parameterized.
 ### Simulation (Icarus Verilog example)
 
 ```bash
-iverilog -g2012 -o uart_sim transmitter.v receiver.v uart_top.v your_testbench.v
+iverilog -g2012 -o uart_sim tb_uart_top.v uart_top.v transmitter.v receiver.v
 vvp uart_sim
 ```
 
-No testbench is checked into the repo yet.
+`tb_uart_top.v` drives `uart_top` with random bytes through `newd`/`tx_data`, waits for `donetx` then `donerx`, and checks `rx_data` against what was sent, printing a `PASS`/`FAIL` line per byte plus a summary. It also dumps `uart_tb.vcd` for waveform viewing (e.g. `gtkwave uart_tb.vcd`).
 
 ## Status
 
-Transmitter, receiver, and top-level wiring are implemented and have been simulated together successfully. Testbenches are not yet checked in.
+Transmitter, receiver, and top-level wiring are implemented and verified end-to-end via `tb_uart_top.v` (10/10 random bytes round-tripped correctly through `uart_top`).
 
 ## License
 
